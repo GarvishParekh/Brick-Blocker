@@ -3,27 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class Level_Manager : MonoBehaviour
 {
-    // example for comments
 
-    public static Level_Manager levelInstane;
+    [SerializeField] GameObject[] levels;
+    [SerializeField] Transform levelSpawnPlace;
+
     public static int levelCount = 0;
 
-    private void Awake()
+    public void SpawnLevel()
     {
-        if (levelInstane == null)
-            levelInstane = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
-        DontDestroyOnLoad(gameObject);
+        Instantiate(levels[levelCount], levelSpawnPlace.position, Quaternion.identity);
     }
-
-    public void ChangeLevel()
-    {
-        SceneManager.LoadScene(levelCount);
-    }
-
 }
