@@ -6,9 +6,18 @@ using UnityEngine.SceneManagement;
 public class Main_Menu_UI_Manager : MonoBehaviour
 {
     public static Action ButtonCLick;
+    public static Action Reset;
+    public static Action<int> LevelSelected;
+
+    public static Action MusicOff;
+    public static Action MusicOn;
 
     [SerializeField] Animator main_Menu_Animation;
     [SerializeField] GameObject start_Button;
+    [SerializeField] GameObject animation_Trigger;
+    [SerializeField] GameObject player_racket;
+    [SerializeField] GameObject player_Ball;
+    [SerializeField] Vector3 ballSpawnPosition = new Vector3(0, 0, 6);
 
     [Header ("Main menu UI elements")]
     [SerializeField] GameObject setting_Pannel;
@@ -34,6 +43,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [SerializeField] GameObject main_Canvas;
     [SerializeField] GameObject in_Game_Canvas;
     [SerializeField] GameObject level_Holder;
+    [SerializeField] int levelCount = 0;
     
     private void Start()
     {
@@ -76,7 +86,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
     public void _Exit_Button ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Application.Quit();
     }
 
     // toggle setting on start
@@ -113,12 +123,14 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     {
         if (music_On)
         {
+            MusicOff?.Invoke();
             music_On = false;
             music_Text.text = "Off";
             music_Text.color = toggle_Off_Color;
         }
         else if (!music_On)
         {
+            MusicOn?.Invoke();
             music_On = true;
             music_Text.text = "On";
             music_Text.color = toggle_On_Color;
@@ -131,6 +143,8 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         _CloseAllPanel();
         main_Canvas.SetActive(false);
         in_Game_Canvas.SetActive(true);
+
+        levelCount = level_Number - 1;
 
         if (level_Number < 10)
             level_Display_Text.text = $"LEVEL 0{level_Number}";
@@ -156,5 +170,24 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
         // enable all player to see the level
         level_Holder.SetActive(true);
+
+        animation_Trigger.SetActive(false);
+        animation_Trigger.SetActive(true);
+        Invoke(nameof(SpawnRacket), 2);
+        Invoke(nameof(SpawnBall), 2.5f);
+
+        LevelSelected?.Invoke(levelCount);
+    } void SpawnRacket() => player_racket.SetActive(true);
+    void SpawnBall() => Instantiate(player_Ball, ballSpawnPosition, Quaternion.identity);
+
+
+    public void _InGame_Main_Menu_Button ()
+    {
+        Reset?.Invoke();
+        main_Canvas.SetActive(true);
+        in_Game_Canvas.SetActive(false);
+
+        level_Holder.SetActive(false);
+        Invoke(nameof(ActiveLevelPanel), 0.7f);
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\xC3\x89\xC3\x8F\xC2\xB8\xC3\x87\xC3\x8E\xC3\x9E\xC2\xB0\xC3\xA2\xC2\xBB\xC3\xBA_color_0_255_0"
+  m_Name: "A\u0303\x89A\u0303\x8FA\u0302\xB8A\u0303\x87A\u0303\x8EA\u0303\x9EA\u0302\xB0A\u0303\xA2A\u0302\xBBA\u0303\xBA_color_0_255_0"
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

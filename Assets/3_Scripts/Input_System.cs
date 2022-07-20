@@ -1,9 +1,8 @@
 using UnityEngine;
-using JMRSDK.InputModule;
 
 public class Input_System : MonoBehaviour
 {
-    [SerializeField] Transform racket;
+    [SerializeField] Transform player_Racket;
 
     private void Update()
     {
@@ -11,11 +10,14 @@ public class Input_System : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.Log(hit.transform.name);
-            var pos = racket.position;
-            pos.z = Mathf.Clamp(racket.position.z, 0, 0);
-            racket.position = pos;
 
-            racket.position = hit.point;
+            Vector3 pos = player_Racket.position;
+
+            pos = ray.GetPoint(5);
+            pos.x = Mathf.Clamp(pos.x, -2.3f, 2.3f);
+            pos.y = Mathf.Clamp(pos.y, -1.15f, 1.3f);
+
+            player_Racket.position = pos;
         }
 
 
