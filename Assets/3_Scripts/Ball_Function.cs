@@ -1,12 +1,12 @@
+using TMPro;
 using System;
-using JMRSDK;
 using UnityEngine;
-using JMRSDK.InputModule;
 using System.Collections;
 
 public class Ball_Function : MonoBehaviour
 {
     Rigidbody player;
+    [SerializeField] Animator racket_Animation;
 
     public static Action BallMissed;
 
@@ -22,26 +22,35 @@ public class Ball_Function : MonoBehaviour
     [SerializeField] string brick_Tag;
     [SerializeField] string backWallTag;
 
-    [Header("Direction inputs")]
-    [SerializeField] bool isLeft = false;
-    [SerializeField] bool isRight = false;
-    [SerializeField] bool isUp = false;
-    [SerializeField] bool isDown = false;
+    [Header ("Swipe inputs")]
+    // swipe controlls
+    [SerializeField] bool swipeUp = false;
+    [SerializeField] bool swipeDown = false;
+    [SerializeField] bool swipeLeft = false;
+    [SerializeField] bool swipeRight = false;
+    [Space]
+    float swipeValue;
+    [Space]
+    [SerializeField] TMP_Text direction_Text;
 
 
     private void Awake()
     {
         player = GetComponent<Rigidbody>();
+        direction_Text = GameObject.Find("Directioh_Text").GetComponent<TMP_Text>();
+        racket_Animation = GameObject.Find("Racket_Model").GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
         Main_Menu_UI_Manager.Reset += Reset;
+        Racket_Animation.RacketGotHit += RacketAnimation;
     }
 
     private void OnDisable()
     {
         Main_Menu_UI_Manager.Reset -= Reset;
+        Racket_Animation.RacketGotHit -= RacketAnimation;
     }
 
     private void Reset()
@@ -81,21 +90,34 @@ public class Ball_Function : MonoBehaviour
         }
     }
 
-    IEnumerator XMovement()
+    IEnumerator LeftDirection()
     {
-        int X = UnityEngine.Random.Range(-1, 2);
-
-        player_Side_Speed = 0.3f * X;
+        player_Side_Speed = -0.1f;
 
         yield return new WaitForSeconds(0.3f);
         player_Side_Speed = player.velocity.x;
     }
 
-    IEnumerator YMovement()
+    IEnumerator RightDirection()
     {
-        int X = UnityEngine.Random.Range(-1, 2);
+        player_Side_Speed = 0.1f;
 
-        player_Up_Speed = 0.2f * X;
+        yield return new WaitForSeconds(0.1f);
+        player_Side_Speed = player.velocity.x;
+    }
+
+    IEnumerator UpDirection()
+    {
+        player_Up_Speed = 0.08f;
+
+        yield return new WaitForSeconds(0.1f);
+        player_Up_Speed = player.velocity.y;
+    }
+
+
+    IEnumerator DownDirection()
+    {
+        player_Up_Speed = -0.08f;
 
         yield return new WaitForSeconds(0.3f);
         player_Up_Speed = player.velocity.y;
@@ -106,44 +128,90 @@ public class Ball_Function : MonoBehaviour
         if (info.collider.CompareTag (racket_Tag))
         {
             isForward = true;
-            ApplyRandomForce();
+            GiveDirection();
 
         }
 
         else if (info.collider.CompareTag (brick_Tag))
         {
             isForward = false;
-            ApplyRandomForce();
         }
     
         else if (info.collider.CompareTag (backWallTag))
         {
             isForward = true;
-            ApplyRandomForce();
             BallMissed?.Invoke();
         }
     }
 
-    void ApplyRandomForce()
+    void GiveDirection()
     {
-        StartCoroutine(nameof(XMovement));
-        StartCoroutine(nameof(YMovement));
+        if (swipeLeft)
+            StartCoroutine(nameof(LeftDirection));
+        else if (swipeRight)
+            StartCoroutine(nameof(RightDirection));
+        else if (swipeUp)
+            StartCoroutine(nameof(UpDirection));
+        else if (swipeDown)
+            StartCoroutine(nameof(DownDirection));
+        else return;
     }
 
-
-    void SetDirection(bool desireDirection)
+    private void Update()
     {
-        isLeft = false;
-        isRight = false;
-        isUp = false;
-        isDown = false;
+        bool isSwipingRight;
+        bool isSwipingLeft;
+        bool isSwipingUp;
+        bool isSwipingDown;
 
-        desireDirection = true;
+        isSwipingRight = JMRInteraction.GetSwipeRight(out swipeValue);
+        if (isSwipingRight)
+        {
+            direction_Text.text = ($"Direction: right");
+            NoDirection();
+            swipeRight = true;
+        }
+
+        isSwipingLeft = JMRInteraction.GetSwipeLeft(out swipeValue);
+        if (isSwipingLeft)
+        {
+            direction_Text.text = ($"Direction: Left");
+            NoDirection();
+            swipeLeft = true;
+        }
+
+        isSwipingUp = JMRInteraction.GetSwipeUp(out swipeValue);
+        if (isSwipingUp)
+        {
+            direction_Text.text = ($"Direction: Up");
+            NoDirection();
+            swipeUp = true;
+        }
+
+        isSwipingDown = JMRInteraction.GetSwipeDown(out swipeValue);
+        if (isSwipingDown)
+        {
+            direction_Text.text = ($"Direction: Down");
+            NoDirection();
+            swipeDown = true;
+        }
     }
 
-
-    public void Update()
+    void NoDirection()
     {
-        isRight = JMRInteraction.GetSwipeRight(out float val);
+        swipeRight = false;
+        swipeLeft = false;
+        swipeUp = false;
+        swipeDown = false;
+    }
+
+    void RacketAnimation ()
+    {
+        if (swipeUp)
+            racket_Animation.SetTrigger("isUp");
+        else if (swipeDown)
+            racket_Animation.SetTrigger("isDown");
+        else if (swipeLeft)
+            racket_Animation.SetTrigger("isLeft");
     }
 }
