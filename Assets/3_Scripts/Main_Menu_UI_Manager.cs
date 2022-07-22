@@ -26,6 +26,10 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
     [SerializeField] GameObject close_Button;
 
+    [Header ("In-Game UI elements")]
+    [SerializeField] string continueString;
+    [SerializeField] Transform playerHearts;
+
     [Header ("Toggle button text")]
     [SerializeField] Color toggle_On_Color;
     [SerializeField] Color toggle_Off_Color;
@@ -41,13 +45,32 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [Header("Level selection")]
     [SerializeField] TMP_Text level_Display_Text;
     [SerializeField] GameObject main_Canvas;
-    [SerializeField] GameObject in_Game_Canvas;
+    [SerializeField] GameObject level_Intro_Canvas;
     [SerializeField] GameObject level_Holder;
     [SerializeField] int levelCount = 0;
     
     private void Start()
     {
         Toggle_OnStart();
+    }
+
+    private void OnEnable()
+    {
+        Ball_Function.BallMissed += BallMissedFunction;
+    }
+
+    private void OnDisable()
+    {
+        Ball_Function.BallMissed -= BallMissedFunction;
+    }
+
+    void BallMissedFunction()
+    {
+        if (playerHearts.GetChild(0).gameObject == null)
+            return;
+
+        GameObject firstHeart = playerHearts.GetChild(0).gameObject;
+        Destroy(firstHeart);
     }
 
     // change panels on main menu only
@@ -137,14 +160,31 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         }
     }
 
+    public void _Continue_Button ()
+    {
+        _CloseAllPanel();
+        main_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(true);
+
+        levelCount = PlayerPrefs.GetInt(continueString, 1);
+
+        int level_Number = levelCount + 1;
+
+        if (level_Number < 10)
+            level_Display_Text.text = $"LEVEL 0{level_Number}";
+        else if (level_Number >= 10)
+            level_Display_Text.text = $"LEVEL {level_Number}";
+    }
+
     // selcting levels from level panel
     public void _Level_Button (int level_Number)
     {
         _CloseAllPanel();
         main_Canvas.SetActive(false);
-        in_Game_Canvas.SetActive(true);
+        level_Intro_Canvas.SetActive(true);
 
         levelCount = level_Number - 1;
+        PlayerPrefs.SetInt(continueString, levelCount);
 
         if (level_Number < 10)
             level_Display_Text.text = $"LEVEL 0{level_Number}";
@@ -156,7 +196,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     public void _Back_Button()
     {
         main_Canvas.SetActive(true);
-        in_Game_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(false);
 
         Invoke(nameof(ActiveLevelPanel), 0.7f);
     } void ActiveLevelPanel() => _ChangePanel(level_Panel);
@@ -166,7 +206,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     {
         // close all the panels
         main_Canvas.SetActive(false);
-        in_Game_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(false);
 
         // enable all player to see the level
         level_Holder.SetActive(true);
@@ -185,9 +225,10 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     {
         Reset?.Invoke();
         main_Canvas.SetActive(true);
-        in_Game_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(false);
 
         level_Holder.SetActive(false);
+        player_racket.SetActive(false);
         Invoke(nameof(ActiveLevelPanel), 0.7f);
     }
 }

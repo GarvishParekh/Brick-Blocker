@@ -21,6 +21,7 @@ TagManager:
   - AnimationTrigger
   - Bricks
   - PlayerBall
+  - BackWall
   layers:
   - Default
   - TransparentFX

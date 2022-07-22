@@ -83,6 +83,7 @@ MonoBehaviour:
   isForward: 1
   racket_Tag: Player
   brick_Tag: Bricks
+  backWallTag: BackWall
 --- !u!1 &2442478701711376419
 GameObject:
   m_ObjectHideFlags: 0
