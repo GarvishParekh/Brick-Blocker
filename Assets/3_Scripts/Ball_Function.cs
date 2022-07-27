@@ -65,12 +65,14 @@ public class Ball_Function : MonoBehaviour
         Invoke(nameof(StartBallMovement), 2);
     } void StartBallMovement() => StartCoroutine(nameof(BallMovement));
 
+    // logic for ball movement in the box according to applied force 
     IEnumerator BallMovement ()
     {
         while(true)
         {
             if (isForward)
             {
+                // moving ball towards the bircks
                 ball_Position.x = player_Side_Speed;
                 ball_Position.y = player_Up_Speed;
                 ball_Position.z = player_Speed;
@@ -80,6 +82,7 @@ public class Ball_Function : MonoBehaviour
 
             else if (!isForward)
             {
+                // moving ball towards racket
                 ball_Position.x = player_Side_Speed;
                 ball_Position.y = player_Up_Speed;
                 ball_Position.z = -player_Speed;
@@ -90,6 +93,7 @@ public class Ball_Function : MonoBehaviour
         }
     }
 
+    // add force on the ball in left direction 
     IEnumerator LeftDirection()
     {
         player_Side_Speed = -0.1f;
@@ -98,6 +102,7 @@ public class Ball_Function : MonoBehaviour
         player_Side_Speed = player.velocity.x;
     }
 
+    // add force on the ball in right direction 
     IEnumerator RightDirection()
     {
         player_Side_Speed = 0.1f;
@@ -106,6 +111,7 @@ public class Ball_Function : MonoBehaviour
         player_Side_Speed = player.velocity.x;
     }
 
+    // add upwards force on the ball
     IEnumerator UpDirection()
     {
         player_Up_Speed = 0.08f;
@@ -114,7 +120,7 @@ public class Ball_Function : MonoBehaviour
         player_Up_Speed = player.velocity.y;
     }
 
-
+    // add dowawards force on the ball
     IEnumerator DownDirection()
     {
         player_Up_Speed = -0.08f;
@@ -125,18 +131,22 @@ public class Ball_Function : MonoBehaviour
 
     private void OnCollisionEnter(Collision info)
     {
+        // if the ball hit the racket 
         if (info.collider.CompareTag (racket_Tag))
         {
-            isForward = true;
-            GiveDirection();
+            // make them move towards bricks 
+            isForward = true;   
+            GiveDirection();            // change their direction according to the inputs player gave 
 
         }
 
+        // if the ball hits any brick
         else if (info.collider.CompareTag (brick_Tag))
         {
             isForward = false;
         }
-    
+
+        // if the player is enable to shoot the ball and hit the back wall
         else if (info.collider.CompareTag (backWallTag))
         {
             isForward = true;
@@ -144,6 +154,7 @@ public class Ball_Function : MonoBehaviour
         }
     }
 
+    // give direction to the ball according to the inputs player gave 
     void GiveDirection()
     {
         if (swipeLeft)
@@ -157,7 +168,8 @@ public class Ball_Function : MonoBehaviour
         else return;
     }
 
-    private void Update()
+    // get the input from the controller via swiping on the joystick
+    void GetInputs ()
     {
         bool isSwipingRight;
         bool isSwipingLeft;
@@ -195,6 +207,10 @@ public class Ball_Function : MonoBehaviour
             NoDirection();
             swipeDown = true;
         }
+    }
+    private void Update()
+    {
+        GetInputs();
     }
 
     void NoDirection()

@@ -9,7 +9,7 @@ public class Racket_Animation : MonoBehaviour
     {
         if (info.CompareTag("PlayerBall"))
         {
-            RacketGotHit?.Invoke();
+            //RacketGotHit?.Invoke();
             Debug.Log("Racket Hit");
         }
     }

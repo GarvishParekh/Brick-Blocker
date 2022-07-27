@@ -1,17 +1,20 @@
 using TMPro;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Main_Menu_UI_Manager : MonoBehaviour
 {
-    public static Action ButtonCLick;
     public static Action Reset;
+    public static Action PlayerLose;
+    public static Action ButtonCLick;
     public static Action<int> LevelSelected;
 
-    public static Action MusicOff;
     public static Action MusicOn;
+    public static Action MusicOff;
+    [Header ("Plaer pref")]
+    [SerializeField] string MusicPlayerPref;
 
+    [Header ("Components")]
     [SerializeField] Animator main_Menu_Animation;
     [SerializeField] GameObject start_Button;
     [SerializeField] GameObject animation_Trigger;
@@ -27,6 +30,9 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [SerializeField] GameObject close_Button;
 
     [Header ("In-Game UI elements")]
+    [SerializeField] int heartsCount;
+    [SerializeField] GameObject hearts;
+    [SerializeField] GameObject in_Game_Ui;
     [SerializeField] string continueString;
     [SerializeField] Transform playerHearts;
 
@@ -52,6 +58,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     private void Start()
     {
         Toggle_OnStart();
+        
     }
 
     private void OnEnable()
@@ -66,9 +73,20 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
     void BallMissedFunction()
     {
-        if (playerHearts.GetChild(0).gameObject == null)
-            return;
+        // if hearts all are used
+        if (playerHearts.childCount == 0)
+        {
+            Debug.Log($"Player lose");
+            in_Game_Ui.SetActive(true);     // enable the in game ui after losing all hearts
+            PlayerLose?.Invoke();
 
+            // reset the level holder 
+            level_Holder.SetActive(false);
+            level_Holder.SetActive(true);
+            return;
+        }
+
+        // if hearts are left 
         GameObject firstHeart = playerHearts.GetChild(0).gameObject;
         Destroy(firstHeart);
     }
@@ -112,6 +130,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         Application.Quit();
     }
 
+    #region Toggle Settings 
     // toggle setting on start
     void Toggle_OnStart()
     {
@@ -119,9 +138,22 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         sfx_Text.text = "On";
         sfx_Text.color = toggle_On_Color;
 
-        music_On = true;
-        music_Text.text = "On";
-        music_Text.color = toggle_On_Color;
+        // getting the last setting for music 
+        int music_toggle = PlayerPrefs.GetInt(MusicPlayerPref, 1);
+        if (music_toggle == 0)
+        {
+            MusicOff?.Invoke();
+            music_On = false;
+            music_Text.text = "Off";
+            music_Text.color = toggle_Off_Color;
+        }
+        else if (music_toggle == 1)
+        {
+            MusicOn?.Invoke();
+            music_On = true;
+            music_Text.text = "On";
+            music_Text.color = toggle_On_Color;
+        }
     }
 
     // sfx toggle button
@@ -146,6 +178,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     {
         if (music_On)
         {
+            PlayerPrefs.SetInt(MusicPlayerPref, 0);
             MusicOff?.Invoke();
             music_On = false;
             music_Text.text = "Off";
@@ -153,12 +186,14 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         }
         else if (!music_On)
         {
+            PlayerPrefs.SetInt(MusicPlayerPref, 1);
             MusicOn?.Invoke();
             music_On = true;
             music_Text.text = "On";
             music_Text.color = toggle_On_Color;
         }
     }
+    #endregion
 
     public void _Continue_Button ()
     {
@@ -204,6 +239,11 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     // for player to start the game after UI
     public void _Start_Game_Button ()
     {
+        //spawn player life 
+        for (int i = 0; i < heartsCount; i++)
+        {
+            Instantiate(hearts, playerHearts.position, Quaternion.identity, playerHearts);
+        }
         // close all the panels
         main_Canvas.SetActive(false);
         level_Intro_Canvas.SetActive(false);
@@ -220,15 +260,41 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     } void SpawnRacket() => player_racket.SetActive(true);
     void SpawnBall() => Instantiate(player_Ball, ballSpawnPosition, Quaternion.identity);
 
+    #region Reset Events
+    void ResetEvents ()
+    {
+        in_Game_Ui.SetActive(false);        // close the in-game UI
+        // close all the hearts 
+        for (int i = 0; i < playerHearts.childCount; i++)
+        {
+            GameObject child = playerHearts.GetChild(i).gameObject;
+            Destroy(child);
+        }
+        Reset?.Invoke();
+        Invoke(nameof(ActiveLevelPanel), 0.7f);
+
+        // level amd player racket
+        level_Holder.SetActive(false);
+        player_racket.SetActive(false);
+    }
 
     public void _InGame_Main_Menu_Button ()
     {
-        Reset?.Invoke();
+        ResetEvents();
+
+        // manage canvas
         main_Canvas.SetActive(true);
         level_Intro_Canvas.SetActive(false);
-
-        level_Holder.SetActive(false);
-        player_racket.SetActive(false);
-        Invoke(nameof(ActiveLevelPanel), 0.7f);
     }
+
+
+    public void _InGame_Restart_Button()
+    {
+        ResetEvents();
+
+        // manage canvas
+        main_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(true);
+    }
+    #endregion
 }

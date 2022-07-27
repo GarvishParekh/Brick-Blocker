@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   racket_Animation: {fileID: 0}
   ball_Position: {x: 0, y: 0, z: 0}
-  player_Speed: 5
+  player_Speed: 6
   player_Side_Speed: 10
   player_Up_Speed: 0
   isForward: 1
