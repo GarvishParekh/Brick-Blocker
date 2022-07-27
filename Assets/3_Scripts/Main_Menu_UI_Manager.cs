@@ -32,7 +32,8 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [Header ("In-Game UI elements")]
     [SerializeField] int heartsCount;
     [SerializeField] GameObject hearts;
-    [SerializeField] GameObject in_Game_Ui;
+    [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject levelCompletePanel;
     [SerializeField] string continueString;
     [SerializeField] Transform playerHearts;
 
@@ -77,7 +78,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         if (playerHearts.childCount == 0)
         {
             Debug.Log($"Player lose");
-            in_Game_Ui.SetActive(true);     // enable the in game ui after losing all hearts
+            gameOverPanel.SetActive(true);     // enable the in game ui after losing all hearts
             PlayerLose?.Invoke();
 
             // reset the level holder 
@@ -227,6 +228,25 @@ public class Main_Menu_UI_Manager : MonoBehaviour
             level_Display_Text.text = $"LEVEL {level_Number}";
     }
 
+    public void _NextLevel_Button()
+    {
+        _CloseAllPanel();
+        ResetEvents();
+
+        main_Canvas.SetActive(false);
+        level_Intro_Canvas.SetActive(true);
+
+        int CurrentLevel = levelCount;
+        levelCount = CurrentLevel + 1;
+        PlayerPrefs.SetInt(continueString, levelCount);
+        int level_Number = levelCount + 1;          // Display number for level
+
+        if (level_Number < 10)
+            level_Display_Text.text = $"LEVEL 0{level_Number}";
+        else if (level_Number >= 10)
+            level_Display_Text.text = $"LEVEL {level_Number}";
+    }
+
     // back button from level to main menu 
     public void _Back_Button()
     {
@@ -263,7 +283,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     #region Reset Events
     void ResetEvents ()
     {
-        in_Game_Ui.SetActive(false);        // close the in-game UI
+        gameOverPanel.SetActive(false);        // close the in-game UI
         // close all the hearts 
         for (int i = 0; i < playerHearts.childCount; i++)
         {
