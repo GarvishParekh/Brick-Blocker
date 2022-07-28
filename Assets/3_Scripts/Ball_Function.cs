@@ -29,6 +29,7 @@ public class Ball_Function : MonoBehaviour
     [SerializeField] bool swipeLeft = false;
     [SerializeField] bool swipeRight = false;
     [Space]
+
     float swipeValue;
     [Space]
     [SerializeField] TMP_Text direction_Text;

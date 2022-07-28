@@ -26,6 +26,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [SerializeField] GameObject setting_Pannel;
     [SerializeField] GameObject level_Panel;
     [SerializeField] GameObject leaderboard_Panel;
+    [SerializeField] GameObject player_Name_Holder;
 
     [SerializeField] GameObject close_Button;
 
@@ -114,6 +115,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
         // buttons
         close_Button.SetActive(false);
+        player_Name_Holder.SetActive(false);
     }
 
     public void _ButtonClick()
@@ -123,8 +125,9 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     public void _StartButton ()
     {
         main_Menu_Animation.enabled = true;
+        Invoke(nameof(ShowPlayerName), 1);
         Destroy(start_Button);
-    }
+    }void ShowPlayerName() => player_Name_Holder.SetActive(true);
 
     public void _Exit_Button ()
     {
@@ -253,7 +256,8 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         main_Canvas.SetActive(true);
         level_Intro_Canvas.SetActive(false);
 
-        Invoke(nameof(ActiveLevelPanel), 0.7f);
+        Invoke(nameof(ActiveLevelPanel), 0.7f);     // show level panel
+        Invoke(nameof(player_Name_Holder), 1);      // display player name
     } void ActiveLevelPanel() => _ChangePanel(level_Panel);
 
     // for player to start the game after UI

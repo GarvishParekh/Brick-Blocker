@@ -72,6 +72,7 @@ public class Leaderboards : MonoBehaviour
         =>StartCoroutine(nameof(SubmitScoreRoutine), ScoreToUpdate);
 
     // get data from the leaderbaords 
+    [System.Obsolete]
     IEnumerator FetchToHighScoreRoutine ()
     {
         bool done = false;
@@ -83,7 +84,12 @@ public class Leaderboards : MonoBehaviour
 
                 for (int i = 0; i < members.Length; i++)
                 {
-                    nameText[i].text = members[i].player.id.ToString();
+                    if (members[i].player.name != "")
+                        nameText[i].text = members[i].player.name.ToString();
+                    else
+                    {
+                        nameText[i].text = members[i].player.id.ToString();
+                    }
                     scoreText[i].text = members[i].score.ToString();
                 }
             }
