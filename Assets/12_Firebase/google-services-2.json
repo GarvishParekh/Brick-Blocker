@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "506653165121",
+    "project_id": "jio-mr---brick-breaker",
+    "storage_bucket": "jio-mr---brick-breaker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506653165121:android:92beee9718db0a4fa3a8c0",
+        "android_client_info": {
+          "package_name": "com.theintellify.BrickBlocker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506653165121-mfttkoomkooipo5jq0mvkrlgmri5akc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI4HOY1PaD57SYH4b17Hafc6de9kqpuuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506653165121-mfttkoomkooipo5jq0mvkrlgmri5akc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
