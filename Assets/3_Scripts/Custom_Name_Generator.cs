@@ -6,7 +6,7 @@ using LootLocker.Requests;
 public class Custom_Name_Generator : MonoBehaviour
 {
     [SerializeField] TMP_Text player_Name_Text;
-    [SerializeField] Button setPlayerNameButton;
+    [SerializeField] Button change_Player_name;
     [Space]
     [SerializeField] string PlayerName;
     [SerializeField] string Default_Name;
@@ -16,17 +16,17 @@ public class Custom_Name_Generator : MonoBehaviour
     {
         "adorable", "brainy", "clever", "eager", "excited", "funny", "aback", "abaft", "abandoned", "abashed", "aberrant", "abhorrent",
         "abiding", "abject", "ablaze", "able", "abnormal", "aboard", "aboriginal", "abortive", "abounding", "abrasive", "abrupt", "absent", 
-        "absorbed", "absorbing", "abstracted", "absurd", "abundant", "abusive", "acceptable", "accessible", "accidental", "accurate", "acid", 
-        "acidic", "acoustic", "acrid", "actually", "adamant", "adorable", "adventurous"
+        "absorbed", "absorbing", "cold", "absurd", "abundant", "abusive", "acceptable", "accessible", "accidental", "accurate", "acid", 
+        "acidic", "acoustic", "acrid", "actually", "adamant", "adorable", "adventurous", "Mr"
     };
 
 
     public string[] Last_Name = new string[]
     {
         "history", "map", "computer", "food", "data", "library", "idea", "area", "story", "video", "people", "history", "way", "art", "world",
-        "information", "map", "two", "family", "government", "health",  "system", "computer", "meat", "year", "thanks", "music", "person",
-        "reading", "method", "data", "food", "understanding", "theory", "law", "bird", "literature", "problem", "software", "control",
-        "knowledge", "power", "ability", "economics"
+        "information", "map", "Taco", "family", "Husky", "health",  "system", "computer", "meat", "year", "thanks", "music", "person",
+        "reading", "method", "data", "food", "Lama", "theory", "law", "bird", "literature", "problem", "software", "control",
+        "knowledge", "power", "ability", "economics", "King", "Senpai", "Bean", "Burger", "Pizza"
     }; 
 
     public void _Set_Player_Name()
@@ -34,11 +34,10 @@ public class Custom_Name_Generator : MonoBehaviour
         string getFirstName = First_Name[Random.Range(0, First_Name.Length)];
         string getLastName = Last_Name[Random.Range(0, Last_Name.Length)];
 
-        string playerName = $"{getFirstName}_{getLastName}";
+        string playerName = $"{getFirstName}_{getLastName} {System.DateTime.Now.Millisecond}";
         player_Name_Text.text = playerName;
         PlayerPrefs.SetString(PlayerName, playerName);
 
-        setPlayerNameButton.gameObject.SetActive(false);
         LootLockerSDKManager.SetPlayerName(playerName, (response) =>
         {
             if (response.success)
@@ -52,11 +51,6 @@ public class Custom_Name_Generator : MonoBehaviour
     {
         string checkName = PlayerPrefs.GetString(PlayerName, Default_Name);
         player_Name_Text.text = checkName;
-
-        if (checkName == Default_Name)
-            setPlayerNameButton.gameObject.SetActive(true);
-        else
-            setPlayerNameButton.gameObject.SetActive(false);
     }
 
     private void Update()

@@ -5,7 +5,7 @@ using LootLocker.Requests;
 
 public class Leaderboards : MonoBehaviour
 {
-    int leaderBoardID = 5002;
+    private readonly int leaderBoardID = 5002;
     string playerID;
 
     [SerializeField] TMP_Text[] nameText;
@@ -76,7 +76,7 @@ public class Leaderboards : MonoBehaviour
     IEnumerator FetchToHighScoreRoutine ()
     {
         bool done = false;
-        LootLockerSDKManager.GetScoreListMain(leaderBoardID, 5, 0, (response) =>
+        LootLockerSDKManager.GetScoreListMain(leaderBoardID, 10, 0, (response) =>
         {
             if (response.success)
             {

@@ -1,6 +1,7 @@
 using TMPro;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Main_Menu_UI_Manager : MonoBehaviour
 {
@@ -29,6 +30,17 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     [SerializeField] GameObject player_Name_Holder;
 
     [SerializeField] GameObject close_Button;
+
+    [Space]
+    [SerializeField] GameObject[] levelPages;
+    [SerializeField] Image[] indicater_Points;
+    [SerializeField] int pageNumber = 0;
+    [Space]
+    [SerializeField] Color normalColor;
+    [SerializeField] Color selectedColor;
+    [Space]
+    Vector2 normalScale = new Vector2(1, 1);
+    Vector2 selectedScale = new Vector2(1.7f, 1.7f);
 
     [Header ("In-Game UI elements")]
     [SerializeField] int heartsCount;
@@ -60,7 +72,12 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     private void Start()
     {
         Toggle_OnStart();
-        
+
+        // set leve page
+        levelPages[0].SetActive(true);
+        indicater_Points[0].color = selectedColor;
+        indicater_Points[0].GetComponent<RectTransform>().localScale = selectedScale;
+
     }
 
     private void OnEnable()
@@ -115,7 +132,6 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
         // buttons
         close_Button.SetActive(false);
-        player_Name_Holder.SetActive(false);
     }
 
     public void _ButtonClick()
@@ -201,6 +217,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
 
     public void _Continue_Button ()
     {
+        player_Name_Holder.SetActive(false);
         _CloseAllPanel();
         main_Canvas.SetActive(false);
         level_Intro_Canvas.SetActive(true);
@@ -218,6 +235,7 @@ public class Main_Menu_UI_Manager : MonoBehaviour
     // selcting levels from level panel
     public void _Level_Button (int level_Number)
     {
+        player_Name_Holder.SetActive(false);
         _CloseAllPanel();
         main_Canvas.SetActive(false);
         level_Intro_Canvas.SetActive(true);
@@ -311,7 +329,6 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         level_Intro_Canvas.SetActive(false);
     }
 
-
     public void _InGame_Restart_Button()
     {
         ResetEvents();
@@ -321,4 +338,41 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         level_Intro_Canvas.SetActive(true);
     }
     #endregion
+
+    public void _NextPage ()
+    {
+        CloseAllPage();
+        if (pageNumber < levelPages.Length - 1)
+            pageNumber++;
+        else
+            pageNumber = 0;
+
+        levelPages[pageNumber].SetActive(true);
+        indicater_Points[pageNumber].color = selectedColor;
+        indicater_Points[pageNumber].GetComponent<RectTransform>().localScale = selectedScale;
+    }
+
+    public void _PreviousButton()
+    {
+        CloseAllPage();
+        if (pageNumber > 0)
+            pageNumber--;
+        else
+            pageNumber = levelPages.Length - 1;
+
+        levelPages[pageNumber].SetActive(true);
+        indicater_Points[pageNumber].color = selectedColor;
+        indicater_Points[pageNumber].GetComponent<RectTransform>().localScale = selectedScale;
+    }
+
+
+    void CloseAllPage ()
+    {
+        for (int i = 0; i < levelPages.Length; i++)
+        {
+            levelPages[i].SetActive(false);
+            indicater_Points[i].color = normalColor;
+            indicater_Points[i].GetComponent<RectTransform>().localScale = normalScale;
+        }
+    }
 }

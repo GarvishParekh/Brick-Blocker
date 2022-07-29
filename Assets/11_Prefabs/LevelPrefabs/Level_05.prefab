@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649434694477
 Animator:
@@ -338,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649509227252
 Animator:
@@ -484,6 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649511058270
 Animator:
@@ -630,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649602702495
 Animator:
@@ -808,6 +812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649699437473
 Animator:
@@ -1025,6 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649794453384
 Animator:
@@ -1171,6 +1177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649862837124
 Animator:
@@ -1317,6 +1324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672649934738234
 Animator:
@@ -1362,7 +1370,7 @@ Transform:
   m_GameObject: {fileID: 6802672650111176487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 6802672649326675604}
   - {fileID: 6802672649634774675}
@@ -1498,6 +1506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650264819896
 Animator:
@@ -1644,6 +1653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650270050830
 Animator:
@@ -1790,6 +1800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650510983668
 Animator:
@@ -1936,6 +1947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650700584873
 Animator:
@@ -2082,6 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650752121230
 Animator:
@@ -2228,6 +2241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650759015400
 Animator:
@@ -2374,6 +2388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650900776732
 Animator:
@@ -2520,6 +2535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672650955867100
 Animator:
@@ -2666,6 +2682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672651045651934
 Animator:
@@ -2812,6 +2829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672651060445798
 Animator:
@@ -2958,6 +2976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fe147503d1846fba095103a7bd0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  non_Destructive: 0
   player_Ball: PlayerBall
 --- !u!95 &6802672651324139030
 Animator:

@@ -15,6 +15,13 @@ public class Score_Manager : MonoBehaviour
     [Space]
     [SerializeField] int brickRemainingCount;
     [SerializeField] int scoreCount;
+
+    private void Start()
+    {
+        totalScore = PlayerPrefs.GetInt(TotalScoreID, 0);
+        totalScoreText.text = $"Total Score: {totalScore}";
+    }
+
     private void OnEnable()
     {
         Brick_Function.Score += score;
@@ -38,11 +45,11 @@ public class Score_Manager : MonoBehaviour
 
         // addind score and updating on leaderboards
         totalScore = PlayerPrefs.GetInt(TotalScoreID, 0);
-        totalScore += 100;
+        totalScore += 5;
         totalScoreText.text = $"Total Score: {totalScore}";
         totalScoreText_GameComplete.text = $"Total Score: {totalScore}";
         PlayerPrefs.SetInt(TotalScoreID, totalScore);
-        // updating on lootlocker
+        // updating leaderboard's database
         UpdateLeaderboards?.Invoke(totalScore);
 
         if (brickRemainingCount <= 0)

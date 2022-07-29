@@ -6,6 +6,8 @@ public class Brick_Function : MonoBehaviour
     public static Action Score;
     public static Action AddBrick;
 
+    [SerializeField] bool non_Destructive = false;
+
     Animator brick_Animation;
     [SerializeField] string player_Ball;
 
@@ -19,7 +21,8 @@ public class Brick_Function : MonoBehaviour
 
     private void OnEnable()
     {
-        AddBrick?.Invoke();
+        if (!non_Destructive)
+            AddBrick?.Invoke();
     }
 
     private void OnTriggerEnter(Collider info)
@@ -31,6 +34,9 @@ public class Brick_Function : MonoBehaviour
 
         else if (info.CompareTag (player_Ball))
         {
+            if (non_Destructive)
+                return;
+            // ball will just bounce back 
             Score?.Invoke();
             Destroy(gameObject);
         }
