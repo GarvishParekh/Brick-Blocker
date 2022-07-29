@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.lootlocker.lootlockersdk": "file:/Users/baps/Downloads/unity-sdk-main",
+    "com.lootlocker.lootlockersdk": "file:E:/Lootlocker SDK/unity-sdk-main",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.15.16",
     "com.unity.ide.rider": "2.0.7",

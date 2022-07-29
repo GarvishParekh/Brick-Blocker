@@ -275,8 +275,20 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         level_Intro_Canvas.SetActive(false);
 
         Invoke(nameof(ActiveLevelPanel), 0.7f);     // show level panel
-        Invoke(nameof(player_Name_Holder), 1);      // display player name
-    } void ActiveLevelPanel() => _ChangePanel(level_Panel);
+        Invoke(nameof(ShowPlayerHolder), 1);        // display player name
+    }
+
+    // for showing level button
+    void ActiveLevelPanel()
+    {
+        _ChangePanel(level_Panel);
+    }
+
+    // fpr showing player name
+    void ShowPlayerHolder()
+    {
+        player_Name_Holder.SetActive(true);
+    }
 
     // for player to start the game after UI
     public void _Start_Game_Button ()
@@ -364,7 +376,6 @@ public class Main_Menu_UI_Manager : MonoBehaviour
         indicater_Points[pageNumber].color = selectedColor;
         indicater_Points[pageNumber].GetComponent<RectTransform>().localScale = selectedScale;
     }
-
 
     void CloseAllPage ()
     {

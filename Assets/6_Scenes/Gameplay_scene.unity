@@ -16864,7 +16864,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Leaderboard <size=.25
 
-    >(Top 5)</size>
+    >(Top 10)</size>
 
 '
   m_isRightToLeft: 0
